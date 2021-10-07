@@ -1,24 +1,74 @@
-// An element should occur more than n/2 times in an array
-
-#include<bits/stdc++.h>
-using namespace std;
-int main(){
-    int n; cin>>n;
-    vector<int> arr;
-    for(int i=0;i<n;i++){
-        int a; cin>>a;
-        arr.push_back(a);
-    }
-    /*--------Naive--------*/
-    for(int i=0;i<n;i++){
-        int count=1;
-        for(int j=i+1;j<n;i++){
-            if(arr[i] == arr[j]) count++;
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        
+        // implementing majority element problem for n/k elements
+        int k = 3;
+        
+        // pair of element and count
+        vector<pair<int, int>> candidates(k-1);
+        
+        /* First step : process array
+           priority order -
+           1. if a match found, do count++
+           2. if space empty ( someone's count 0) allocate space and count
+           3. else decrement everyone's count
+        */
+        for(auto& ele : nums){
+            bool processed = false;
+            
+            // step 1 
+            for(auto& candidate : candidates){
+                if(candidate.second > 0){
+                    if(candidate.first == ele){
+                        candidate.second++;
+                        processed = true;
+                        break;
+                    }
+                }
+            }  
+            
+            // step 2 
+            if(!processed){
+                for(auto& candidate : candidates){
+                    if(candidate.second == 0){
+                        candidate.first = ele;                    
+                        candidate.second = 1;
+                        processed = true;
+                        break;
+                    }
+                }
+            }
+            
+            // step 3
+            if(!processed){
+                for(auto& candidate : candidates){
+                    candidate.second--;
+                }
+            }
         }
-        if(count>n/2){
-            cout<<arr[i]<<" ";
+        
+        /* Second step : verification
+        */
+        vector<int> res;
+        for(auto& candidate : candidates){
+            
+            // if candidate is initialised
+            if(candidate.second > 0){ 
+                
+                // count its occurence in array
+                int count = 0;
+                for(auto& ele : nums){
+                    if(ele == candidate.first){
+                        count++;
+                    }
+                }
+                
+                if(count > (nums.size()/k)){
+                    res.push_back(candidate.first);
+                }    
+            }
         }
-        cout<<-1<<" ";
+        return res;
     }
-    return 0;
-}
+};
