@@ -9,16 +9,8 @@ int main(){
         int a; cin>>a;
         arr.push_back(a);
     }
-    /*--------Naive--------*/
-    for(int i=0;i<n;i++){
-        int count=1;
-        for(int j=i+1;j<n;i++){
-            if(arr[i] == arr[j]) count++;
-        }
-        if(count>n/2){
-            cout<<arr[i]<<" ";
-        }
-        cout<<-1<<" ";
-    }
+    
+    // Moorie Voting Algo
+    
     return 0;
 }
