@@ -6,7 +6,7 @@ int main(){
     for(int i=0;i<n;i++){
         vector<int> mat;
         for(int j=0;j<m;j++){
-            int x; cin>>x;
+            int x; cin>>x;  
             mat.push_back(x);
         }
         v.push_back(mat);
