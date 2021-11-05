@@ -12,25 +12,25 @@ class node{
     }
 };
 
-node* inserttree(vector<int> v, node *root, int n, int idx){
-    if(idx<n){
-        node *tmp = new node(v[idx]);
-        root = tmp;
-        root->left = inserttree(v,root->left,n, 2*idx+1);
-        root->right = inserttree(v,root->right,n, 2*idx+2);
+node *inserttree(vector<int> v, node *root, int n, int idx){
+    if(idx < n){
+        node *temp = new node(v[idx]);
+        root = temp;
+        root->left = inserttree(v,root->left,n,2*idx+1);
+        root->right = inserttree(v, root->right, n, 2*idx+2);
     }
     return root;
 }
 
 bool fun(node *root){
-    int lh=0, rh=0;
-    if(root==NULL || root->left == NULL and root->right == NULL) return true;
-    else{
-        if(root->left) lh = root->left->data;
-        if(root->right) rh = root->right->data;
-        if(root->data == lh+rh and fun(root->left) and fun(root->right)) return true;
-        else return false;
-    }
+    if(root == NULL) return true;
+    if(root->left == NULL and root->right == NULL) return true;
+
+    int sum = 0;
+    if(root->left) sum += root->left->data;
+    if(root->right) sum += root->right->data;
+
+    return sum == root->data and fun(root->left) and fun(root->right);
 }
 
 int main(){
@@ -41,7 +41,7 @@ int main(){
         v.push_back(a);
     }
     node *root = inserttree(v,root,n,0);
-    if(fun(root) == true) cout<<"YES";
+    if(fun(root)) cout<<"YES";
     else cout<<"NO";
     return 0;
 }
